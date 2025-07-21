@@ -1,66 +1,12 @@
+import { Headers } from "../components/Header";
+
 export function HomePage() {
   return (
     <>
       <title>Home Page</title>
       <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
         {/* Header */}
-        <header className="bg-gray-900 text-white">
-          <div className="max-w-7xl mx-auto flex items-center justify-between p-4">
-            {/* Left Section */}
-            <div className="flex items-center space-x-4">
-              <a href="/">
-                <img
-                  className="h-8 hidden sm:block"
-                  src="images/logo-white.png"
-                  alt="Logo"
-                />
-                <img
-                  className="h-8 sm:hidden"
-                  src="images/mobile-logo-white.png"
-                  alt="Mobile Logo"
-                />
-              </a>
-            </div>
-
-            {/* Middle Section */}
-            <div className="flex items-center w-full max-w-md mx-4">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full rounded-l-md px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-md">
-                <img
-                  className="h-5"
-                  src="images/icons/search-icon.png"
-                  alt="Search"
-                />
-              </button>
-            </div>
-
-            {/* Right Section */}
-            <div className="flex items-center space-x-6">
-              <a href="/orders" className="hover:underline">
-                Orders
-              </a>
-              <a
-                href="/checkout"
-                className="relative flex items-center space-x-1 hover:underline"
-              >
-                <img
-                  className="h-6"
-                  src="images/icons/cart-icon.png"
-                  alt="Cart"
-                />
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-                  3
-                </span>
-                <span>Cart</span>
-              </a>
-            </div>
-          </div>
-        </header>
-
+        <Headers />
         {/* Products Grid */}
         <main className="max-w-7xl mx-auto py-8 px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

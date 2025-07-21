@@ -1,46 +1,12 @@
+import { Headers } from "../components/Header";
+
 export function CheckoutPage() {
   return (
     <>
       <title>Checkout</title>
       <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
         {/* Header */}
-        <header className="bg-gray-900 text-white">
-          <div className="max-w-7xl mx-auto flex items-center justify-between p-4">
-            {/* Left Section */}
-            <div className="flex items-center space-x-4">
-              <a href="/">
-                <img
-                  className="h-8 hidden sm:block"
-                  src="images/logo-white.png"
-                  alt="Logo"
-                />
-                <img
-                  className="h-8 sm:hidden"
-                  src="images/mobile-logo-white.png"
-                  alt="Mobile Logo"
-                />
-              </a>
-            </div>
-
-            {/* Middle Section */}
-            <div className="text-sm sm:text-base">
-              Checkout (
-              <a href="/" className="underline hover:text-blue-400">
-                3 items
-              </a>
-              )
-            </div>
-
-            {/* Right Section */}
-            <div>
-              <img
-                className="h-6"
-                src="images/icons/checkout-lock-icon.png"
-                alt="Secure"
-              />
-            </div>
-          </div>
-        </header>
+        <Headers />
 
         {/* Checkout Content */}
         <main className="max-w-7xl mx-auto p-4">
