@@ -1,6 +1,12 @@
 import { Link } from "react-router";
 
-export function Headers() {
+function Header({ cartItems }) {
+  let totalQuantity = 0;
+
+  cartItems.forEach((cartItem) => {
+    totalQuantity += cartItem.quantity;
+  });
+
   return (
     <>
       <header className="bg-gray-900 text-white">
@@ -52,7 +58,7 @@ export function Headers() {
                 alt="Cart"
               />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-                3
+                {totalQuantity || "error"}
               </span>
               <span>Cart</span>
             </Link>
@@ -62,3 +68,5 @@ export function Headers() {
     </>
   );
 }
+
+export default Header;

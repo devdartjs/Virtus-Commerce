@@ -1,4 +1,4 @@
-import { Headers } from "../components/Header";
+import Header from "../components/Header";
 
 export function OrdersPage() {
   return (
@@ -6,7 +6,7 @@ export function OrdersPage() {
       <title>Orders</title>
 
       {/* Header */}
-      <Headers />
+      <Header />
 
       {/* Orders Section */}
       <main className="max-w-7xl mx-auto p-4">

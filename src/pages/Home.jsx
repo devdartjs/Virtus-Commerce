@@ -1,59 +1,88 @@
-import { Headers } from "../components/Header";
+import { useState, useEffect } from "react";
+import Header from "../components/Header";
 
 export function HomePage() {
+  const [products, setProducts] = useState([]);
+  const [cartItens, setCartItens] = useState([]);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await fetch("http://localhost:3000/api/products");
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+
+    async function fetchCartItems() {
+      try {
+        const response = await fetch("http://localhost:3000/api/cart-items");
+        if (!response.ok) {
+          throw new Error("Failed to fetch cart items");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        setCartItens(data);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    }
+
+    fetchProducts();
+    fetchCartItems();
+  }, []);
+
   return (
     <>
-      <title>Home Page</title>
       <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
-        {/* Header */}
-        <Headers />
-        {/* Products Grid */}
+        <Header cartItems={cartItens} />
+
         <main className="max-w-7xl mx-auto py-8 px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {[
-              {
-                image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-                name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-                rating: "images/ratings/rating-45.png",
-                reviews: 87,
-                price: "$10.90",
-              },
-              {
-                image: "images/products/intermediate-composite-basketball.jpg",
-                name: "Intermediate Size Basketball",
-                rating: "images/ratings/rating-40.png",
-                reviews: 127,
-                price: "$20.95",
-              },
-              {
-                image:
-                  "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-                name: "Adults Plain Cotton T-Shirt - 2 Pack",
-                rating: "images/ratings/rating-45.png",
-                reviews: 56,
-                price: "$7.99",
-              },
-            ].map((product, index) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {products.map((product) => (
               <div
-                key={index}
+                key={product.id}
                 className="bg-white shadow rounded-xl p-4 flex flex-col justify-between hover:shadow-lg transition-shadow"
               >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="h-48 w-full object-contain mb-4"
-                />
                 <h3 className="font-semibold text-lg line-clamp-2">
                   {product.name}
                 </h3>
+
+                <div className="relative group aspect-w-1 aspect-h-1 overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="h-48 w-full object-contain mb-4 group-hover:opacity-30 transition-opacity"
+                  />
+
+                  <div className="absolute inset-0 bg-slate-200 bg-opacity-60 text-justify text-slate-700 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-sm">{product.description}</p>
+                  </div>
+                </div>
+
                 <div className="flex items-center mt-2 space-x-2">
-                  <img className="h-5" src={product.rating} alt="Rating" />
-                  <span className="text-sm text-blue-600">
-                    {product.reviews}
+                  <img
+                    className="h-5"
+                    src={`images/ratings/rating-${
+                      product.rating.stars * 10
+                    }.png`}
+                    alt="Rating-Stars"
+                  />
+                  <span className="text-md text-slate-800 text-bold">
+                    {product.rating.count}
                   </span>
                 </div>
+
                 <div className="text-xl font-bold text-green-600 mt-2">
-                  {product.price}
+                  {`$${(product.priceCents / 100).toFixed(2)}`}
                 </div>
                 <select className="mt-2 border border-gray-300 rounded-md px-2 py-1 focus:ring-blue-500">
                   {[...Array(10)].map((_, i) => (

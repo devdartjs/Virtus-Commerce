@@ -1,4 +1,4 @@
-import { Headers } from "../components/Header";
+import Header from "../components/Header";
 
 export function CheckoutPage() {
   return (
@@ -6,7 +6,7 @@ export function CheckoutPage() {
       <title>Checkout</title>
       <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
         {/* Header */}
-        <Headers />
+        <Header />
 
         {/* Checkout Content */}
         <main className="max-w-7xl mx-auto p-4">

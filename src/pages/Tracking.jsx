@@ -1,10 +1,10 @@
-import { Headers } from "../components/Header";
+import Header from "../components/Header";
 
 export function TrackingPage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
       {/* Header */}
-      <Headers />
+      <Header />
 
       {/* Tracking Content */}
       <main className="max-w-3xl mx-auto p-6">
