@@ -9,30 +9,32 @@ import "./App.css";
 function App() {
   const [cartItems, setCartItens] = useState([]);
 
-  useEffect(() => {
-    async function fetchCartItems() {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/api/cart-items?expand=product"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch cart items");
-        }
-
-        const data = await response.json();
-        console.log(data);
-        setCartItens(data);
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
+  async function loadCart() {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/cart-items?expand=product"
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart items");
       }
-    }
 
-    fetchCartItems();
+      const data = await response.json();
+      setCartItens(data);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  }
+
+  useEffect(() => {
+    loadCart();
   }, []);
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage cartItems={cartItems} />} />
+      <Route
+        path="/"
+        element={<HomePage cartItems={cartItems} loadCart={loadCart} />}
+      />
       <Route
         path="/checkout"
         element={<CheckoutPage cartItems={cartItems} />}

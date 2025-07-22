@@ -7,7 +7,7 @@ export function CheckoutPage({ cartItems }) {
 
   useEffect(() => {
     async function fetchDeliveryOptions() {
-      const res = await fetch("http://localhost:3000/api/delivery-options");
+      const res = await fetch("/api/delivery-options");
       if (!res.ok) throw new Error("Failed to fetch delivery options");
       const data = await res.json();
       setDeliveryOptions(data);
@@ -18,7 +18,7 @@ export function CheckoutPage({ cartItems }) {
 
   useEffect(() => {
     async function fetchPaymentSummary() {
-      const res = await fetch("http://localhost:3000/api/payment-summary");
+      const res = await fetch("/api/payment-summary");
       if (!res.ok) throw new Error("Failed to fetch payment summary");
       const data = await res.json();
       setPaymentSummary(data);
