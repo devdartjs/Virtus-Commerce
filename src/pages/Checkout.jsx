@@ -1,34 +1,54 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 
-export function CheckoutPage({ cartItems }) {
+export function CheckoutPage({ cartItems, loadCart }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
 
-  useEffect(() => {
-    async function fetchDeliveryOptions() {
-      const res = await fetch("/api/delivery-options");
-      if (!res.ok) throw new Error("Failed to fetch delivery options");
-      const data = await res.json();
-      setDeliveryOptions(data);
-    }
+  async function fetchDeliveryOptions() {
+    const res = await fetch("/api/delivery-options");
+    if (!res.ok) throw new Error("Failed to fetch delivery options");
+    const data = await res.json();
+    setDeliveryOptions(data);
+  }
 
+  useEffect(() => {
     fetchDeliveryOptions();
   }, []);
 
-  useEffect(() => {
-    async function fetchPaymentSummary() {
-      const res = await fetch("/api/payment-summary");
-      if (!res.ok) throw new Error("Failed to fetch payment summary");
-      const data = await res.json();
-      setPaymentSummary(data);
-    }
+  async function fetchPaymentSummary() {
+    const res = await fetch("/api/payment-summary");
+    if (!res.ok) throw new Error("Failed to fetch payment summary");
+    const data = await res.json();
+    setPaymentSummary(data);
+  }
 
+  useEffect(() => {
     fetchPaymentSummary();
   }, [cartItems]);
 
   const getDeliveryOption = (id) =>
     deliveryOptions.find((opt) => String(opt.id) === String(id));
+
+  const updateDeliveryOption = async (productId, deliveryOptionId) => {
+    try {
+      const updateRes = await fetch(`/api/cart-items/${productId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ deliveryOptionId }),
+      });
+
+      if (!updateRes.ok) throw new Error("Failed to update delivery dates");
+
+      await loadCart();
+      fetchDeliveryOptions();
+      fetchPaymentSummary();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -85,7 +105,15 @@ export function CheckoutPage({ cartItems }) {
                                 {quantity}
                               </span>
                             </span>
-                            <button className="text-blue-600 hover:underline">
+                            <button
+                              className="text-blue-600 hover:underline"
+                              onClick={() =>
+                                updateDeliveryOption(
+                                  item.productId,
+                                  deliveryOptionId
+                                )
+                              }
+                            >
                               Update
                             </button>
                             <button className="text-blue-600 hover:underline">
@@ -99,7 +127,7 @@ export function CheckoutPage({ cartItems }) {
                             Choose a delivery option:
                           </div>
                           {deliveryOptions.map((opt) => (
-                            <label
+                            <div
                               key={opt.id}
                               className="flex items-start space-x-2 mb-1 cursor-pointer"
                             >
@@ -108,8 +136,11 @@ export function CheckoutPage({ cartItems }) {
                                 className="mt-1"
                                 name={`delivery-option-${item.productId}`}
                                 value={opt.id}
-                                defaultChecked={
+                                checked={
                                   String(opt.id) === String(deliveryOptionId)
+                                }
+                                onChange={() =>
+                                  updateDeliveryOption(item.productId, opt.id)
                                 }
                               />
                               <div className="text-sm">
@@ -127,7 +158,7 @@ export function CheckoutPage({ cartItems }) {
                                       )} - Shipping`}
                                 </div>
                               </div>
-                            </label>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -137,6 +168,7 @@ export function CheckoutPage({ cartItems }) {
               })}
             </div>
 
+            {/* Payment summary */}
             <div className="bg-white rounded-xl shadow p-4">
               <h3 className="text-xl font-semibold mb-4">Payment Summary</h3>
 
