@@ -1,10 +1,10 @@
 import Header from "../components/Header";
 
-export function TrackingPage() {
+export function TrackingPage({ cartItems }) {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
       {/* Header */}
-      <Header />
+      <Header cartItems={cartItems} />
 
       {/* Tracking Content */}
       <main className="max-w-3xl mx-auto p-6">
