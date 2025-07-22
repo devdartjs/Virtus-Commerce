@@ -45,10 +45,6 @@ export function HomePage({ cartItems }) {
                     alt={product.name}
                     className="h-48 w-full object-contain mb-4 group-hover:opacity-30 transition-opacity"
                   />
-
-                  <div className="absolute inset-0 bg-slate-200 bg-opacity-60 text-justify text-slate-700 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <p className="text-sm">{product.description}</p>
-                  </div>
                 </div>
 
                 <div className="flex items-center mt-2 space-x-2">

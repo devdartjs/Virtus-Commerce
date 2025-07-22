@@ -1,23 +1,9 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 
-export function CheckoutPage() {
-  const [cartItems, setCartItems] = useState([]);
+export function CheckoutPage({ cartItems }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
-
-  useEffect(() => {
-    async function fetchCartItems() {
-      const res = await fetch(
-        "http://localhost:3000/api/cart-items?expand=product"
-      );
-      if (!res.ok) throw new Error("Failed to fetch cart items");
-      const data = await res.json();
-      setCartItems(data);
-    }
-
-    fetchCartItems();
-  }, []);
 
   useEffect(() => {
     async function fetchDeliveryOptions() {

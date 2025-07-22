@@ -7,7 +7,7 @@ import { TrackingPage } from "./pages/Tracking";
 import "./App.css";
 
 function App() {
-  const [cartItens, setCartItens] = useState([]);
+  const [cartItems, setCartItens] = useState([]);
 
   useEffect(() => {
     async function fetchCartItems() {
@@ -32,12 +32,12 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage cartItems={cartItens} />} />
+      <Route path="/" element={<HomePage cartItems={cartItems} />} />
       <Route
         path="/checkout"
-        element={<CheckoutPage cartItems={cartItens} />}
+        element={<CheckoutPage cartItems={cartItems} />}
       />
-      <Route path="/orders" element={<OrdersPage />} />
+      <Route path="/orders" element={<OrdersPage cartItems={cartItems} />} />
       <Route path="/tracking" element={<TrackingPage />} />
       <Route path="*" element={<div>Page Not Found</div>} />
     </Routes>
