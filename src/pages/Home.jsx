@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 
-export function HomePage() {
+export function HomePage({ cartItems }) {
   const [products, setProducts] = useState([]);
-  const [cartItens, setCartItens] = useState([]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -14,36 +13,20 @@ export function HomePage() {
         }
 
         const data = await response.json();
-        console.log(data);
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     }
 
-    async function fetchCartItems() {
-      try {
-        const response = await fetch("http://localhost:3000/api/cart-items");
-        if (!response.ok) {
-          throw new Error("Failed to fetch cart items");
-        }
-
-        const data = await response.json();
-        console.log(data);
-        setCartItens(data);
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-      }
-    }
-
     fetchProducts();
-    fetchCartItems();
   }, []);
 
   return (
     <>
+      <title>Home</title>
       <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
-        <Header cartItems={cartItens} />
+        <Header cartItems={cartItems} />
 
         <main className="max-w-7xl mx-auto py-8 px-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
