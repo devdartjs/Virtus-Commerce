@@ -58,7 +58,7 @@ function Header({ cartItems }) {
                 alt="Cart"
               />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-                {totalQuantity || "error"}
+                {totalQuantity || "0"}
               </span>
               <span>Cart</span>
             </Link>

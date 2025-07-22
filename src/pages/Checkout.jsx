@@ -116,7 +116,22 @@ export function CheckoutPage({ cartItems, loadCart }) {
                             >
                               Update
                             </button>
-                            <button className="text-blue-600 hover:underline">
+                            <button
+                              className="text-blue-600 hover:underline"
+                              onClick={async () => {
+                                try {
+                                  await fetch(
+                                    `/api/cart-items/${item.productId}`,
+                                    {
+                                      method: "DELETE",
+                                    }
+                                  );
+                                  await loadCart();
+                                } catch (err) {
+                                  console.log(err);
+                                }
+                              }}
+                            >
                               Delete
                             </button>
                           </div>
