@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import Header from "../components/Header";
 
 export function CheckoutPage({ cartItems, loadCart }) {
+  const navigate = useNavigate();
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
 
@@ -227,7 +229,31 @@ export function CheckoutPage({ cartItems, loadCart }) {
                 <p>Loading summary...</p>
               )}
 
-              <button className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold">
+              <button
+                className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold"
+                onClick={async () => {
+                  try {
+                    const res = await fetch(`/api/orders`, {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    });
+
+                    if (!res.ok) throw new Error("Failed to place order");
+
+                    const newOrder = await res.json();
+
+                    await loadCart();
+                    navigate("/orders");
+
+                    alert(`Order Finished!: ${newOrder.id}`);
+                  } catch (err) {
+                    console.error("Error while finishing order:", err);
+                    alert("Error while finishing order. Try Again.");
+                  }
+                }}
+              >
                 Place your order
               </button>
             </div>
