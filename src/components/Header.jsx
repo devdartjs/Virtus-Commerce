@@ -11,7 +11,6 @@ function Header({ cartItems }) {
     <>
       <header className="bg-gray-900 text-white">
         <div className="max-w-7xl mx-auto flex items-center justify-between p-4">
-          {/* Left Section */}
           <div className="flex items-center space-x-4">
             <Link to="/">
               <img
@@ -27,7 +26,6 @@ function Header({ cartItems }) {
             </Link>
           </div>
 
-          {/* Middle Section */}
           <div className="flex items-center w-full max-w-md mx-4">
             <input
               type="text"
@@ -43,7 +41,6 @@ function Header({ cartItems }) {
             </button>
           </div>
 
-          {/* Right Section */}
           <div className="flex items-center space-x-6">
             <Link to="/orders" className="hover:underline">
               Orders

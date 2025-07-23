@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
+import { formatDate } from "../utils/formatDate";
+import { formatCurrency } from "../utils/formatCurrency";
 
 export function OrdersPage({ cartItems }) {
   const [orders, setOrders] = useState([]);
@@ -14,18 +16,6 @@ export function OrdersPage({ cartItems }) {
 
     fetchOrders();
   }, []);
-
-  function formatDate(ms) {
-    const date = new Date(ms);
-    return date.toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-    });
-  }
-
-  function formatCurrency(cents) {
-    return `$${(cents / 100).toFixed(2)}`;
-  }
 
   return (
     <>

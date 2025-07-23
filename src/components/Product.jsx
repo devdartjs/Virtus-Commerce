@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export function Product({ product, loadCart }) {
   const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false); // novo estado
+  const [added, setAdded] = useState(false);
 
   return (
     <div
@@ -46,7 +46,6 @@ export function Product({ product, loadCart }) {
         ))}
       </select>
 
-      {/* Mostra "Added" somente se estado for true */}
       <div
         className={`mt-2 ml-16 flex items-center space-x-1 text-green-500 text-sm transition-opacity duration-300 ${
           added ? "opacity-100 visible" : "opacity-0 invisible"
@@ -71,8 +70,8 @@ export function Product({ product, loadCart }) {
           });
 
           await loadCart();
-          setAdded(true); // exibe mensagem
-          setTimeout(() => setAdded(false), 2000); // esconde após 2s
+          setAdded(true);
+          setTimeout(() => setAdded(false), 2000);
         }}
       >
         Add to Cart

@@ -250,7 +250,8 @@ export function CheckoutPage({ cartItems, loadCart }) {
                     alert(`Order Finished!: ${newOrder.id}`);
                   } catch (err) {
                     console.error("Error while finishing order:", err);
-                    alert("Error while finishing order. Try Again.");
+                    alert("Invalid Request. Try Again.");
+                    navigate("/");
                   }
                 }}
               >
