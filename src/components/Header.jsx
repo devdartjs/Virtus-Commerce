@@ -15,12 +15,12 @@ function Header({ cartItems }) {
             <Link to="/">
               <img
                 className="h-8 hidden sm:block"
-                src="images/logo-white.png"
+                src="/public/images/icons/svg/logo-white-temp.svg"
                 alt="Logo"
               />
               <img
                 className="h-8 sm:hidden"
-                src="images/mobile-logo-white.png"
+                src="/public/images/icons/svg/logo-white-temp.svg"
                 alt="Mobile Logo"
               />
             </Link>
@@ -32,10 +32,10 @@ function Header({ cartItems }) {
               placeholder="Search"
               className="w-full rounded-l-md px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-md">
+            <button className="bg-slate-400 hover:bg-blue-600 px-4 py-2 rounded-r-md ml-2">
               <img
-                className="h-5"
-                src="images/icons/search-icon.png"
+                className="h-7"
+                src="public/images/icons/svg/search-icon.svg"
                 alt="Search"
               />
             </button>
@@ -51,12 +51,13 @@ function Header({ cartItems }) {
             >
               <img
                 className="h-6"
-                src="images/icons/cart-icon.png"
+                src="public/images/icons/cart-icon.png"
                 alt="Cart"
               />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
                 {totalQuantity || "0"}
               </span>
+
               <span>Cart</span>
             </Link>
           </div>

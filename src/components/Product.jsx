@@ -13,7 +13,7 @@ export function Product({ product, loadCart }) {
 
       <div className="relative group aspect-w-1 aspect-h-1 overflow-hidden">
         <img
-          src={product.image}
+          src={`public/${product.image}`}
           alt={product.name}
           className="h-48 w-full object-contain mb-4 group-hover:opacity-30 transition-opacity"
         />
@@ -22,11 +22,11 @@ export function Product({ product, loadCart }) {
       <div className="flex items-center mt-2 space-x-2">
         <img
           className="h-5"
-          src={`images/ratings/rating-${product.rating.stars * 10}.png`}
+          src={`public/images/ratings/rating-${product.stars * 10}.png`}
           alt="Rating-Stars"
         />
         <span className="text-md text-slate-800 text-bold">
-          {product.rating.count}
+          {product.ratingCount}
         </span>
       </div>
 
@@ -51,14 +51,18 @@ export function Product({ product, loadCart }) {
           added ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
-        <img src="images/icons/checkmark.png" className="h-4" alt="Checkmark" />
+        <img
+          src="public/images/icons/checkmark.png"
+          className="h-4"
+          alt="Checkmark"
+        />
         <span>Added</span>
       </div>
 
       <button
         className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold"
         onClick={async () => {
-          await fetch("/api/cart-items", {
+          await fetch("/api/v1/cart-items", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
