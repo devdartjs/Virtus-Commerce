@@ -8,9 +8,12 @@ export function OrdersPage({ cartItems }) {
 
   useEffect(() => {
     async function fetchOrders() {
-      const res = await fetch("/api/orders?expand=products");
+      const res = await fetch(
+        "http://localhost:3000/api/v1/orders?expand=products"
+      );
       if (!res.ok) throw new Error("Failed to fetch orders");
       const data = await res.json();
+      console.log("data-OrderComponent:", data, typeof data, data.length);
       setOrders(data);
     }
 
@@ -64,7 +67,7 @@ export function OrdersPage({ cartItems }) {
                   className="bg-gray-50 rounded-lg border p-4 flex flex-col"
                 >
                   <img
-                    src={item.product.image}
+                    src={`public/${item.product.image}`}
                     alt={item.product.name}
                     className="h-32 w-full object-contain mb-3"
                   />
@@ -80,7 +83,7 @@ export function OrdersPage({ cartItems }) {
                   <div className="flex flex-col gap-2 mt-auto">
                     <button className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-md">
                       <img
-                        src="images/icons/buy-again.png"
+                        src="public/images/icons/buy-again.png"
                         className="h-4 w-4 mr-2"
                         alt="Buy Again"
                       />
