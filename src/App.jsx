@@ -11,7 +11,9 @@ function App() {
 
   async function loadCart() {
     try {
-      const response = await fetch("http://localhost:3000/api/v1/cart-items");
+      const response = await fetch(
+        "http://localhost:3000/api/v1/cart-items?expand=product"
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch cart items");
       }

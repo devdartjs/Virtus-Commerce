@@ -8,9 +8,15 @@ export function CheckoutPage({ cartItems, loadCart }) {
   const [paymentSummary, setPaymentSummary] = useState(null);
 
   async function fetchDeliveryOptions() {
-    const res = await fetch("/api/v1/delivery-options");
+    const res = await fetch("http://localhost:3000/api/v1/delivery-options");
     if (!res.ok) throw new Error("Failed to fetch delivery options");
     const data = await res.json();
+    // console.log(
+    //   "data-CheckoutComponent-fetchDeliveyOptions:",
+    //   data,
+    //   typeof data,
+    //   data.length
+    // );
     setDeliveryOptions(data);
   }
 
@@ -19,9 +25,15 @@ export function CheckoutPage({ cartItems, loadCart }) {
   }, []);
 
   async function fetchPaymentSummary() {
-    const res = await fetch("/api/payment-summary");
+    const res = await fetch("http://localhost:3000/api/v1/payment-summary");
     if (!res.ok) throw new Error("Failed to fetch payment summary");
     const data = await res.json();
+    // console.log(
+    //   "data-OrderComponent-fetchPaymentSummary:",
+    //   data,
+    //   typeof data,
+    //   data.length
+    // );
     setPaymentSummary(data);
   }
 
@@ -34,15 +46,26 @@ export function CheckoutPage({ cartItems, loadCart }) {
 
   const updateDeliveryOption = async (productId, deliveryOptionId) => {
     try {
-      const updateRes = await fetch(`/api/cart-items/${productId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ deliveryOptionId }),
-      });
+      const updateRes = await fetch(
+        `http://localhost:3000/api/v1/cart-items/${productId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ deliveryOptionId }),
+        }
+      );
 
       if (!updateRes.ok) throw new Error("Failed to update delivery dates");
+
+      // const data = await updateRes.json();
+      // console.log(
+      //   "data-CheckoutComponent-updateDeliveyOptions:",
+      //   data,
+      //   typeof data,
+      //   data.length
+      // );
 
       await loadCart();
       fetchDeliveryOptions();
@@ -64,7 +87,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
               {cartItems.map((item) => {
-                const { product, quantity, deliveryOptionId } = item;
+                const { quantity, deliveryOptionId } = item;
                 const deliveryOption = getDeliveryOption(deliveryOptionId);
 
                 return (
@@ -85,18 +108,18 @@ export function CheckoutPage({ cartItems, loadCart }) {
                     <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4">
                       <img
                         className="h-32 w-32 object-contain"
-                        src={`public/${product.image}`}
-                        alt={product.name}
+                        src={`public/${item.product.image}`}
+                        alt={item.product.name}
                       />
 
                       <div className="flex flex-col md:flex-row justify-between items-start md:space-x-6 space-y-6 md:space-y-0">
                         <div className="space-y-3 md:w-1/2 w-full">
                           <div>
                             <div className="font-semibold text-lg">
-                              {product.name}
+                              {item.product.name}
                             </div>
                             <div className="text-green-600 font-bold text-lg">
-                              ${(product.priceCents / 100).toFixed(2)}
+                              ${(item.product.priceCents / 100).toFixed(2)}
                             </div>
                           </div>
 
@@ -123,7 +146,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
                               onClick={async () => {
                                 try {
                                   await fetch(
-                                    `/api/cart-items/${item.productId}`,
+                                    `http://localhost:3000/api/v1/cart-items/${item.productId}`,
                                     {
                                       method: "DELETE",
                                     }
@@ -233,12 +256,15 @@ export function CheckoutPage({ cartItems, loadCart }) {
                 className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold"
                 onClick={async () => {
                   try {
-                    const res = await fetch(`/api/orders`, {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                    });
+                    const res = await fetch(
+                      `http://localhost:3000/api/v1/orders`,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                      }
+                    );
 
                     if (!res.ok) throw new Error("Failed to place order");
 

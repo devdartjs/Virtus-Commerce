@@ -13,7 +13,7 @@ export function OrdersPage({ cartItems }) {
       );
       if (!res.ok) throw new Error("Failed to fetch orders");
       const data = await res.json();
-      console.log("data-OrderComponent:", data, typeof data, data.length);
+      // console.log("data-OrderComponent:", data, typeof data, data.length);
       setOrders(data);
     }
 
