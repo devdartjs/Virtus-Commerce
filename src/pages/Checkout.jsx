@@ -11,12 +11,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
     const res = await fetch("http://localhost:3000/api/v1/delivery-options");
     if (!res.ok) throw new Error("Failed to fetch delivery options");
     const data = await res.json();
-    // console.log(
-    //   "data-CheckoutComponent-fetchDeliveyOptions:",
-    //   data,
-    //   typeof data,
-    //   data.length
-    // );
+
     setDeliveryOptions(data);
   }
 
@@ -28,12 +23,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
     const res = await fetch("http://localhost:3000/api/v1/payment-summary");
     if (!res.ok) throw new Error("Failed to fetch payment summary");
     const data = await res.json();
-    // console.log(
-    //   "data-OrderComponent-fetchPaymentSummary:",
-    //   data,
-    //   typeof data,
-    //   data.length
-    // );
+
     setPaymentSummary(data);
   }
 
@@ -44,10 +34,10 @@ export function CheckoutPage({ cartItems, loadCart }) {
   const getDeliveryOption = (id) =>
     deliveryOptions.find((opt) => String(opt.id) === String(id));
 
-  const updateDeliveryOption = async (productId, deliveryOptionId) => {
+  const updateDeliveryOption = async (id, deliveryOptionId) => {
     try {
       const updateRes = await fetch(
-        `http://localhost:3000/api/v1/cart-items/${productId}`,
+        `http://localhost:3000/api/v1/cart-items/${id}`,
         {
           method: "PUT",
           headers: {
@@ -58,14 +48,6 @@ export function CheckoutPage({ cartItems, loadCart }) {
       );
 
       if (!updateRes.ok) throw new Error("Failed to update delivery dates");
-
-      // const data = await updateRes.json();
-      // console.log(
-      //   "data-CheckoutComponent-updateDeliveyOptions:",
-      //   data,
-      //   typeof data,
-      //   data.length
-      // );
 
       await loadCart();
       fetchDeliveryOptions();
@@ -91,10 +73,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
                 const deliveryOption = getDeliveryOption(deliveryOptionId);
 
                 return (
-                  <div
-                    key={item.productId}
-                    className="bg-white rounded-xl shadow p-4"
-                  >
+                  <div key={item.id} className="bg-white rounded-xl shadow p-4">
                     <div className="text-lg text-zinc-600 font-medium mb-4">
                       Delivery date:{" "}
                       {deliveryOption?.deliveryDays != null
@@ -133,10 +112,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
                             <button
                               className="text-blue-600 hover:underline"
                               onClick={() =>
-                                updateDeliveryOption(
-                                  item.productId,
-                                  deliveryOptionId
-                                )
+                                updateDeliveryOption(item.id, deliveryOptionId)
                               }
                             >
                               Update
@@ -146,7 +122,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
                               onClick={async () => {
                                 try {
                                   await fetch(
-                                    `http://localhost:3000/api/v1/cart-items/${item.productId}`,
+                                    `http://localhost:3000/api/v1/cart-items/${item.id}`,
                                     {
                                       method: "DELETE",
                                     }
@@ -180,7 +156,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
                                   String(opt.id) === String(deliveryOptionId)
                                 }
                                 onChange={() =>
-                                  updateDeliveryOption(item.productId, opt.id)
+                                  updateDeliveryOption(item.id, opt.id)
                                 }
                               />
                               <div className="text-sm">
