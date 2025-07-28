@@ -7,7 +7,7 @@ import { TrackingPage } from "./pages/Tracking";
 import "./App.css";
 
 function App() {
-  const [cartItems, setCartItens] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   async function loadCart() {
     try {
@@ -17,7 +17,7 @@ function App() {
       }
 
       const data = await response.json();
-      setCartItens(data);
+      setCartItems(data);
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }

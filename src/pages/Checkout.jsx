@@ -8,7 +8,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
   const [paymentSummary, setPaymentSummary] = useState(null);
 
   async function fetchDeliveryOptions() {
-    const res = await fetch("/api/delivery-options");
+    const res = await fetch("/api/v1/delivery-options");
     if (!res.ok) throw new Error("Failed to fetch delivery options");
     const data = await res.json();
     setDeliveryOptions(data);
@@ -85,7 +85,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
                     <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4">
                       <img
                         className="h-32 w-32 object-contain"
-                        src={product.image}
+                        src={`public/${product.image}`}
                         alt={product.name}
                       />
 

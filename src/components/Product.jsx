@@ -4,11 +4,37 @@ export function Product({ product, loadCart }) {
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
+  async function handleAddToCart() {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/cart-items", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: product.id,
+          quantity,
+        }),
+      });
+
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error(`Error adding cart: ${response.status}`);
+      }
+
+      await loadCart();
+
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+    } catch (error) {
+      console.error("Error while adding product to the cart:", error);
+      alert("It was not possible to add the product to the cart. Try again.");
+    }
+  }
+
   return (
-    <div
-      key={product.id}
-      className="bg-white shadow rounded-xl p-4 flex flex-col justify-between hover:shadow-lg transition-shadow"
-    >
+    <div className="bg-white shadow rounded-xl p-4 flex flex-col justify-between hover:shadow-lg transition-shadow">
       <h3 className="font-semibold text-lg line-clamp-2">{product.name}</h3>
 
       <div className="relative group aspect-w-1 aspect-h-1 overflow-hidden">
@@ -61,22 +87,7 @@ export function Product({ product, loadCart }) {
 
       <button
         className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold"
-        onClick={async () => {
-          await fetch("/api/v1/cart-items", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              productId: product.id,
-              quantity,
-            }),
-          });
-
-          await loadCart();
-          setAdded(true);
-          setTimeout(() => setAdded(false), 2000);
-        }}
+        onClick={handleAddToCart}
       >
         Add to Cart
       </button>
