@@ -4,6 +4,7 @@ import { HomePage } from "./pages/Home";
 import { CheckoutPage } from "./pages/Checkout";
 import { OrdersPage } from "./pages/Orders";
 import { TrackingPage } from "./pages/Tracking";
+import { PageNotFound } from "./pages/PageNotFound";
 import "./App.css";
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
         path="/tracking"
         element={<TrackingPage cartItems={cartItems} />}
       />
-      <Route path="*" element={<div>Page Not Found</div>} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }
