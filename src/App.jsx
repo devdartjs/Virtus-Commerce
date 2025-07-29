@@ -45,7 +45,7 @@ function App() {
       />
       <Route
         path="/tracking"
-        element={<TrackingPage cartItems={cartItems} />}
+        element={<TrackingPage cartItems={cartItems} loadCart={loadCart} />}
       />
       <Route path="*" element={<div>Page Not Found</div>} />
     </Routes>

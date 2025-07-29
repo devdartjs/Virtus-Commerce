@@ -36,12 +36,6 @@ export function OrdersPage({ cartItems, loadCart }) {
           >
             {/* Order Header */}
             <div className="grid sm:grid-cols-4 gap-2 text-sm text-gray-700 bg-white p-4 rounded-xl shadow-sm border mb-4">
-              {/* Order ID */}
-              <div>
-                <div className="font-semibold text-gray-900">Order ID:</div>
-                <div className="break-all text-gray-600">{order.id}</div>
-              </div>
-
               {/* Order Date */}
               <div>
                 <div className="font-semibold text-gray-900">Order Placed:</div>
@@ -58,8 +52,14 @@ export function OrdersPage({ cartItems, loadCart }) {
                 </div>
               </div>
 
-              {/*button delete*/}
+              {/* Order ID */}
               <div>
+                <div className="font-semibold text-gray-900">Order ID:</div>
+                <div className="break-all text-gray-600">{order.id}</div>
+              </div>
+
+              {/*button delete*/}
+              <div className="flex justify-center">
                 <button
                   className="bg-white text-red-600 border border-red-600 font-medium py-2 px-10 rounded-lg transition-all duration-200 ease-in-out transform hover:bg-red-400 hover:text-white hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 active:scale-95"
                   onClick={async () => {

@@ -15,12 +15,6 @@ export function HomePage({ cartItems, loadCart }) {
 
         const data = await response.json();
         const products = data.products;
-        // console.log(
-        //   "products-homeComponent:",
-        //   products,
-        //   typeof products,
-        //   products.length
-        // );
 
         setProducts(products);
       } catch (error) {
