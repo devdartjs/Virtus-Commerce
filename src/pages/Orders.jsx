@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { formatDate } from "../utils/formatDate";
 import { formatCurrency } from "../utils/formatCurrency";
 
-export function OrdersPage({ cartItems }) {
+export function OrdersPage({ cartItems, loadCart }) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export function OrdersPage({ cartItems }) {
       );
       if (!res.ok) throw new Error("Failed to fetch orders");
       const data = await res.json();
-      // console.log("data-OrderComponent:", data, typeof data, data.length);
+
       setOrders(data);
     }
 
@@ -35,7 +35,7 @@ export function OrdersPage({ cartItems }) {
             className="order-container bg-white rounded-xl shadow p-6 mb-8 space-y-4"
           >
             {/* Order Header */}
-            <div className="grid sm:grid-cols-3 gap-2 text-sm text-gray-700 bg-white p-4 rounded-xl shadow-sm border mb-4">
+            <div className="grid sm:grid-cols-4 gap-2 text-sm text-gray-700 bg-white p-4 rounded-xl shadow-sm border mb-4">
               {/* Order ID */}
               <div>
                 <div className="font-semibold text-gray-900">Order ID:</div>
@@ -56,6 +56,36 @@ export function OrdersPage({ cartItems }) {
                 <div className="text-gray-600">
                   {formatCurrency(order.totalCostCents)}
                 </div>
+              </div>
+
+              {/*button delete*/}
+              <div>
+                <button
+                  className="bg-white text-red-600 border border-red-600 font-medium py-2 px-10 rounded-lg transition-all duration-200 ease-in-out transform hover:bg-red-400 hover:text-white hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 active:scale-95"
+                  onClick={async () => {
+                    try {
+                      const response = await fetch(
+                        `http://localhost:3000/api/v1/orders/${order.id}`,
+                        {
+                          method: "DELETE",
+                        }
+                      );
+
+                      if (!response.ok) throw new Error(response.statusText);
+
+                      setOrders((prevOrders) =>
+                        prevOrders.filter(
+                          (existingOrder) => existingOrder.id !== order.id
+                        )
+                      );
+                      await loadCart();
+                    } catch (err) {
+                      console.log(err);
+                    }
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
 
