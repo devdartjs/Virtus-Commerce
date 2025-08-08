@@ -9,10 +9,11 @@ import "./App.css";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const url = import.meta.env.VITE_API_URL;
 
   async function loadCart() {
     try {
-      const response = await fetch("/api/v1/cart-items?expand=product");
+      const response = await fetch(`${url}/api/v1/cart-items?expand=product`);
       if (!response.ok) {
         throw new Error("Failed to fetch cart items");
       }
@@ -32,19 +33,25 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={<HomePage cartItems={cartItems} loadCart={loadCart} />}
+        element={
+          <HomePage cartItems={cartItems} loadCart={loadCart} url={url} />
+        }
       />
       <Route
         path="/checkout"
-        element={<CheckoutPage cartItems={cartItems} loadCart={loadCart} />}
+        element={
+          <CheckoutPage cartItems={cartItems} loadCart={loadCart} url={url} />
+        }
       />
       <Route
         path="/orders"
-        element={<OrdersPage cartItems={cartItems} loadCart={loadCart} />}
+        element={
+          <OrdersPage cartItems={cartItems} loadCart={loadCart} url={url} />
+        }
       />
       <Route
         path="/tracking"
-        element={<TrackingPage cartItems={cartItems} />}
+        element={<TrackingPage cartItems={cartItems} url={url} />}
       />
       <Route path="*" element={<PageNotFound />} />
     </Routes>

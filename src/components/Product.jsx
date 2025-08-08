@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-export function Product({ product, loadCart }) {
+export function Product({ product, loadCart, url }) {
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
   async function handleAddToCart() {
     try {
-      const response = await fetch("/api/v1/cart-items", {
+      const response = await fetch(`${url}/api/v1/cart-items`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export function Product({ product, loadCart }) {
 
       <div className="relative group aspect-w-1 aspect-h-1 overflow-hidden">
         <img
-          src={`public/${product.image}`}
+          src={`${product.image}`}
           alt={product.name}
           className="h-48 w-full object-contain mb-4 group-hover:opacity-30 transition-opacity"
         />
@@ -48,7 +48,7 @@ export function Product({ product, loadCart }) {
       <div className="flex items-center mt-2 space-x-2">
         <img
           className="h-5"
-          src={`public/images/ratings/rating-${product.stars * 10}.png`}
+          src={`/images/ratings/rating-${product.stars * 10}.png`}
           alt="Rating-Stars"
         />
         <span className="text-md text-slate-800 text-bold">
@@ -78,7 +78,7 @@ export function Product({ product, loadCart }) {
         }`}
       >
         <img
-          src="public/images/icons/checkmark.png"
+          src="/images/icons/checkmark.png"
           className="h-4"
           alt="Checkmark"
         />

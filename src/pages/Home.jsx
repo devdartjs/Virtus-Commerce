@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { ProductsGrid } from "../components/ProductsGrid";
 
-export function HomePage({ cartItems, loadCart }) {
+export function HomePage({ cartItems, loadCart, url }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch("/api/v1/products");
+        const response = await fetch(`${url}/api/v1/products`);
         if (!response.ok) {
           throw new Error("Failed to fetch products");
         }
@@ -23,14 +23,14 @@ export function HomePage({ cartItems, loadCart }) {
     }
 
     fetchProducts();
-  }, []);
+  });
 
   return (
     <>
       <title>Home</title>
       <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
         <Header cartItems={cartItems} />
-        <ProductsGrid loadCart={loadCart} products={products} />
+        <ProductsGrid loadCart={loadCart} products={products} url={url} />
       </div>
     </>
   );

@@ -3,12 +3,12 @@ import Header from "../components/Header";
 import { formatDate } from "../utils/formatDate";
 import { formatCurrency } from "../utils/formatCurrency";
 
-export function OrdersPage({ cartItems, loadCart }) {
+export function OrdersPage({ cartItems, loadCart, url }) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     async function fetchOrders() {
-      const res = await fetch("/api/v1/orders?expand=products");
+      const res = await fetch(`${url}/api/v1/orders?expand=products`);
       if (!res.ok) throw new Error("Failed to fetch orders");
       const data = await res.json();
 
@@ -63,7 +63,7 @@ export function OrdersPage({ cartItems, loadCart }) {
                   onClick={async () => {
                     try {
                       const response = await fetch(
-                        `/api/v1/orders/${order.id}`,
+                        `${url}/api/v1/orders/${order.id}`,
                         {
                           method: "DELETE",
                         }
@@ -95,7 +95,7 @@ export function OrdersPage({ cartItems, loadCart }) {
                   className="bg-gray-50 rounded-lg border p-4 flex flex-col"
                 >
                   <img
-                    src={`public/${item.product.image}`}
+                    src={`/${item.product.image}`}
                     alt={item.product.name}
                     className="h-32 w-full object-contain mb-3"
                   />
@@ -111,7 +111,7 @@ export function OrdersPage({ cartItems, loadCart }) {
                   <div className="flex flex-col gap-2 mt-auto">
                     <button className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-md">
                       <img
-                        src="public/images/icons/buy-again.png"
+                        src="/images/icons/buy-again.png"
                         className="h-4 w-4 mr-2"
                         alt="Buy Again"
                       />

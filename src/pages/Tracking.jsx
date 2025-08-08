@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 
-export function TrackingPage({ cartItems }) {
+export function TrackingPage({ cartItems, url }) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     async function fetchOrders() {
-      const res = await fetch("/api/v1/orders?expand=products");
+      const res = await fetch(`${url}/api/v1/orders?expand=products`);
       if (!res.ok) throw new Error("Failed to fetch orders");
       const data = await res.json();
       console.log(data);
@@ -86,7 +86,7 @@ export function TrackingPage({ cartItems }) {
                   </div>
 
                   <img
-                    src={`public/${item.product.image}`}
+                    src={`${url}/${item.product.image}`}
                     alt={item.product.name}
                     className="w-48 h-48 object-contain mx-auto"
                   />

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Header from "../components/Header";
 
-export function CheckoutPage({ cartItems, loadCart }) {
+export function CheckoutPage({ cartItems, loadCart, url }) {
   const navigate = useNavigate();
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
 
   async function fetchDeliveryOptions() {
-    const res = await fetch("/api/v1/delivery-options");
+    const res = await fetch(`${url}/api/v1/delivery-options`);
     if (!res.ok) throw new Error("Failed to fetch delivery options");
     const data = await res.json();
 
@@ -20,7 +20,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
   }, []);
 
   async function fetchPaymentSummary() {
-    const res = await fetch("/api/v1/payment-summary");
+    const res = await fetch(`${url}/api/v1/payment-summary`);
     if (!res.ok) throw new Error("Failed to fetch payment summary");
     const data = await res.json();
 
@@ -36,7 +36,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
 
   const updateDeliveryOption = async (id, deliveryOptionId) => {
     try {
-      const updateRes = await fetch(`/api/v1/cart-items/${id}`, {
+      const updateRes = await fetch(`${url}/api/v1/cart-items/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
                     <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4">
                       <img
                         className="h-32 w-32 object-contain"
-                        src={`public/${item.product.image}`}
+                        src={`/${item.product.image}`}
                         alt={item.product.name}
                       />
 
@@ -118,9 +118,12 @@ export function CheckoutPage({ cartItems, loadCart }) {
                               className="text-blue-600 hover:underline"
                               onClick={async () => {
                                 try {
-                                  await fetch(`/api/v1/cart-items/${item.id}`, {
-                                    method: "DELETE",
-                                  });
+                                  await fetch(
+                                    `${url}/api/v1/cart-items/${item.id}`,
+                                    {
+                                      method: "DELETE",
+                                    }
+                                  );
                                   await loadCart();
                                 } catch (err) {
                                   console.log(err);
@@ -226,7 +229,7 @@ export function CheckoutPage({ cartItems, loadCart }) {
                 className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold"
                 onClick={async () => {
                   try {
-                    const res = await fetch(`/api/v1/orders`, {
+                    const res = await fetch(`${url}/api/v1/orders`, {
                       method: "POST",
                       headers: {
                         "Content-Type": "application/json",
