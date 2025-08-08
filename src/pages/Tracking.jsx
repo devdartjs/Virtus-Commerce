@@ -6,9 +6,7 @@ export function TrackingPage({ cartItems }) {
 
   useEffect(() => {
     async function fetchOrders() {
-      const res = await fetch(
-        "http://localhost:3000/api/v1/orders?expand=products"
-      );
+      const res = await fetch("/api/v1/orders?expand=products");
       if (!res.ok) throw new Error("Failed to fetch orders");
       const data = await res.json();
       console.log(data);

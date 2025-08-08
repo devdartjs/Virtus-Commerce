@@ -6,7 +6,7 @@ export function Product({ product, loadCart }) {
 
   async function handleAddToCart() {
     try {
-      const response = await fetch("http://localhost:3000/api/v1/cart-items", {
+      const response = await fetch("/api/v1/cart-items", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

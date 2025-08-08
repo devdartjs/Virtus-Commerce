@@ -8,9 +8,7 @@ export function OrdersPage({ cartItems, loadCart }) {
 
   useEffect(() => {
     async function fetchOrders() {
-      const res = await fetch(
-        "http://localhost:3000/api/v1/orders?expand=products"
-      );
+      const res = await fetch("/api/v1/orders?expand=products");
       if (!res.ok) throw new Error("Failed to fetch orders");
       const data = await res.json();
 
@@ -65,7 +63,7 @@ export function OrdersPage({ cartItems, loadCart }) {
                   onClick={async () => {
                     try {
                       const response = await fetch(
-                        `http://localhost:3000/api/v1/orders/${order.id}`,
+                        `/api/v1/orders/${order.id}`,
                         {
                           method: "DELETE",
                         }
