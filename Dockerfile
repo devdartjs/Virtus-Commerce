@@ -1,10 +1,14 @@
 # Stage 1: Build with Bun
 FROM oven/bun:1.1 AS builder
 
+# Accept API URL as build argument and set as environment variable
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
+
 # Set working directory
 WORKDIR /app
 
-# Copy all files
+# Copy all project files
 COPY . .
 
 # Install dependencies and build the app

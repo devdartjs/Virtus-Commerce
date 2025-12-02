@@ -10,7 +10,6 @@ import "./App.css";
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const url = import.meta.env.VITE_API_URL;
-  console.log("url:", url);
 
   async function loadCart() {
     try {
